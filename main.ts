@@ -1,3 +1,12 @@
+function startMeasurement () {
+    // checken, ob Werte anliegen
+    pins.i2cWriteNumber(
+    SCD30ADR,
+    StartPeriodicMeasurementCMD,
+    NumberFormat.UInt16BE,
+    false
+    )
+}
 function leseWert () {
     // checken, ob Werte anliegen
     pins.i2cWriteNumber(
@@ -8,9 +17,7 @@ function leseWert () {
     )
     // 4ms warten
     control.waitMicros(3000)
-    co2wert = pins.i2cReadNumber(SCD30ADR, NumberFormat.UInt32BE, true)
-    temperaturwert = pins.i2cReadNumber(SCD30ADR, NumberFormat.UInt32BE, true)
-    luftfeuchtigkeitwert = pins.i2cReadNumber(SCD30ADR, NumberFormat.UInt32BE, false)
+    co2wert = pins.i2cReadNumber(SCD30ADR, NumberFormat.Float32BE, false)
 }
 function warte_bis_bereit () {
     istBereit = 0
@@ -40,30 +47,24 @@ function getVersion () {
     basic.showNumber(pins.i2cReadNumber(SCD30ADR, NumberFormat.UInt16BE, false))
 }
 let istBereit = 0
-let luftfeuchtigkeitwert = 0
-let temperaturwert = 0
 let co2wert = 0
+let StartPeriodicMeasurementCMD = 0
 let GetVersionCMD = 0
 let ReadMeasurementCMD = 0
 let GetDataReadyStatusCMD = 0
 let SCD30ADR = 0
-let SCD30WRITE = 0
-let SCD30READ = 195
-SCD30WRITE += 194
 SCD30ADR = 97
 GetDataReadyStatusCMD = 514
 ReadMeasurementCMD = 768
 GetVersionCMD = 53504
+StartPeriodicMeasurementCMD = 16
 // Protokollbeschreibung
 // 
 // https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.5_CO2/Sensirion_CO2_Sensors_SCD30_Interface_Description.pdf
 basic.forever(function () {
     warte_bis_bereit()
+    startMeasurement()
     leseWert()
     basic.showString("CO2: ")
     basic.showNumber(co2wert)
-    basic.showString("Temp: ")
-    basic.showNumber(temperaturwert)
-    basic.showString("Hum: ")
-    basic.showNumber(luftfeuchtigkeitwert)
 })
