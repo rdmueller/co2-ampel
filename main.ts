@@ -32,7 +32,6 @@ function warte_bis_bereit () {
         // 4ms warten
         control.waitMicros(3000)
         istBereit = pins.i2cReadNumber(SCD30ADR, NumberFormat.UInt16BE, false)
-        basic.showNumber(istBereit)
         control.waitMicros(3000)
     }
 }
@@ -58,6 +57,8 @@ GetDataReadyStatusCMD = 514
 ReadMeasurementCMD = 768
 GetVersionCMD = 53504
 StartPeriodicMeasurementCMD = 16
+warte_bis_bereit()
+basic.showString("CO2-AMPEL")
 // Protokollbeschreibung
 // 
 // https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.5_CO2/Sensirion_CO2_Sensors_SCD30_Interface_Description.pdf
