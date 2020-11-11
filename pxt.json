@@ -3,8 +3,7 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "radio": "*",
-        "Grove": "github:calliope-edu/pxt-grove#v0.2.7"
+        "radio": "*"
     },
     "files": [
         "main.blocks",
