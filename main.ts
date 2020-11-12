@@ -46,6 +46,7 @@ function getVersion () {
     )
     basic.showNumber(pins.i2cReadNumber(SCD30ADR, NumberFormat.UInt16BE, false))
 }
+let wert = 0
 let temperatur = 0
 let co2wert = 0
 let istBereit = 0
@@ -69,7 +70,6 @@ basic.forever(function () {
     warte_bis_bereit()
     startMeasurement()
     leseWert()
-    basic.showString("CO2: ")
     if (co2wert <= 800) {
         basic.setLedColor(0x008000)
     } else if (co2wert <= 1000) {
@@ -79,7 +79,15 @@ basic.forever(function () {
     } else {
         basic.setLedColor(0xff0000)
     }
-    basic.showNumber(co2wert)
-    basic.showString("TMP: ")
-    basic.showNumber(temperatur)
+    wert = 0
+    for (let x = 0; x <= 4; x++) {
+        for (let y = 0; y <= 4; y++) {
+            if (wert < co2wert) {
+                led.plot(x, y)
+            } else {
+                led.unplot(x, y)
+            }
+            wert += 100
+        }
+    }
 })
