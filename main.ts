@@ -1,50 +1,39 @@
-function warte_bis_bereit () {
-    istBereit = 0
-    while (istBereit == 0) {
-        // checken, ob Werte anliegen
-        pins.i2cWriteNumber(
-        SCD30ADR,
-        GetDataReadyStatusCMD,
-        NumberFormat.UInt16BE,
-        false
-        )
-        // 4ms warten
-        control.waitMicros(3000)
-        istBereit = pins.i2cReadNumber(SCD30ADR, NumberFormat.UInt16BE, false)
-        control.waitMicros(3000)
-    }
-}
-function startMeasurement () {
-    // checken, ob Werte anliegen
+function readCalibration () {
     pins.i2cWriteNumber(
     SCD30ADR,
-    StartPeriodicMeasurementCMD,
+    RecalibrationValueCMD,
     NumberFormat.UInt16BE,
     false
     )
-}
-function leseWert () {
-    // checken, ob Werte anliegen
-    pins.i2cWriteNumber(
-    SCD30ADR,
-    ReadMeasurementCMD,
-    NumberFormat.UInt16BE,
-    false
-    )
-    // 3ms warten
-    control.waitMicros(3000)
-    co2wert = pins.i2cReadNumber(SCD30ADR, NumberFormat.Float32BE, true)
-    temperatur = input.temperature()
+    let buffer = pins.i2cReadBuffer(SCD30ADR, 2)
+serial.writeLine("buffer: " + ("" + buffer[0]) + "/" + ("" + buffer[1]))
 }
 function getVersion () {
-    // checken, ob Werte anliegen
     pins.i2cWriteNumber(
     SCD30ADR,
     GetVersionCMD,
     NumberFormat.UInt16BE,
     false
     )
-    basic.showNumber(pins.i2cReadNumber(SCD30ADR, NumberFormat.UInt16BE, false))
+    version = pins.i2cReadNumber(SCD30ADR, NumberFormat.UInt16BE, false)
+    serial.writeLine("version: " + ("" + version))
+    pins.i2cWriteNumber(
+    SCD30ADR,
+    GetVersionCMD,
+    NumberFormat.UInt16BE,
+    false
+    )
+    let buffer2 = pins.i2cReadBuffer(SCD30ADR, 2)
+serial.writeLine("version2: " + ("" + buffer2[0]) + "/" + ("" + buffer2[1]))
+    serial.writeLine("version3: " + ("" + (buffer2[0] * 256 + buffer2[1])))
+    pins.i2cWriteNumber(
+    SCD30ADR,
+    GetVersionCMD,
+    NumberFormat.UInt16BE,
+    false
+    )
+    buffer2 = pins.i2cReadBuffer(SCD30ADR, 3)
+serial.writeLine("version2: " + ("" + buffer2[0]) + "/" + ("" + buffer2[1]) + "/" + ("" + buffer2[2]))
 }
 function displayCO2 () {
     wert = 50
@@ -59,35 +48,40 @@ function displayCO2 () {
         }
     }
 }
-let wert = 0
-let temperatur = 0
 let co2wert = 0
-let istBereit = 0
-let StartPeriodicMeasurementCMD = 0
+let wert = 0
+let version = 0
+let RecalibrationValueCMD = 0
 let GetVersionCMD = 0
-let ReadMeasurementCMD = 0
-let GetDataReadyStatusCMD = 0
+let temperatur = 0
+let istBereit = 0
 let SCD30ADR = 0
 SCD30ADR = 97
-GetDataReadyStatusCMD = 514
-ReadMeasurementCMD = 768
+let GetDataReadyStatusCMD = 514
+let ReadMeasurementCMD = 768
 GetVersionCMD = 53504
-StartPeriodicMeasurementCMD = 16
-warte_bis_bereit()
+let StartPeriodicMeasurementCMD = 16
+RecalibrationValueCMD = 20996
 basic.showString("CO2-AMPEL")
-startMeasurement()
 serial.redirectToUSB()
 serial.setBaudRate(BaudRate.BaudRate9600)
+readCalibration()
+getVersion()
 // Protokollbeschreibung des Sensors
 // https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.5_CO2/Sensirion_CO2_Sensors_SCD30_Interface_Description.pdf
 // CO2 Bewertung
 // https://www.umweltbundesamt.de/sites/default/files/medien/pdfs/kohlendioxid_2008.pdf
 basic.forever(function () {
-    warte_bis_bereit()
-    leseWert()
+    control.waitMicros(1000000)
+    co2wert = SCD30.readCO2() - 192
+    // co2wert = scd30.lese_CO2_Wert()()
     serial.writeLine("")
-    serial.writeString("CO2: ")
+    serial.writeString("")
     serial.writeNumber(co2wert)
+    serial.writeString(";")
+    serial.writeNumber(SCD30.readTemperature())
+    serial.writeString(";")
+    serial.writeNumber(SCD30.readHumidity())
     if (co2wert <= 800) {
         basic.setLedColor(0x008000)
     } else if (co2wert <= 1000) {

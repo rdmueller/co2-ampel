@@ -1,14 +1,16 @@
 {
-    "name": "CO2-Ampel",
+    "name": "CO2-Ampel #2",
     "description": "",
     "dependencies": {
         "core": "*",
-        "radio": "*"
+        "radio": "*",
+        "SCD30": "github:joernalraun/pxt-scd30#8490c661d572f565306a6ad8035033362c9e22c0"
     },
     "files": [
         "main.blocks",
         "main.ts",
-        "README.md"
+        "README.md",
+        "main.py"
     ],
     "testFiles": [
         "test.ts"
