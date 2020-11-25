@@ -3,8 +3,8 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "radio": "*",
-        "SCD30": "github:joernalraun/pxt-scd30#8490c661d572f565306a6ad8035033362c9e22c0"
+        "SCD30": "github:rdmueller/pxt-scd30#8d5cc8a682bc14a8bd38993eb7e6c8c16b215513",
+        "bluetooth": "*"
     },
     "files": [
         "main.blocks",
@@ -18,5 +18,5 @@
     "supportedTargets": [
         "calliopemini"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
