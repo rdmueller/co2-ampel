@@ -39,6 +39,7 @@ serial.setBaudRate(BaudRate.BaudRate9600)
 // CO2 Bewertung
 // https://www.umweltbundesamt.de/sites/default/files/medien/pdfs/kohlendioxid_2008.pdf
 basic.forever(function () {
+    // warte eine Sekunde
     control.waitMicros(1000000)
     co2wert = SCD30.readCO2() - 192
     // co2wert = scd30.lese_CO2_Wert()()
