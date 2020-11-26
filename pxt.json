@@ -3,7 +3,7 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "SCD30": "github:rdmueller/pxt-scd30#f4d381aa3ae77b7d28754224781347ae7597a167"
+        "SCD30": "github:rdmueller/pxt-scd30#3d7cf07874a24a06286b2e52952c02a031f0228f"
     },
     "files": [
         "main.blocks",
@@ -17,5 +17,5 @@
     "supportedTargets": [
         "calliopemini"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }

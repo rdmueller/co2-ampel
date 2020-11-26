@@ -1,7 +1,7 @@
 input.onButtonPressed(Button.AB, function () {
     SCD30.setCalibration400ppm()
     basic.showIcon(IconNames.Heart)
-    music.playTone(262, music.beat(BeatFraction.Whole))
+    basic.pause(1000)
 })
 function displayCO2 () {
     wert = 50
@@ -21,14 +21,18 @@ let wert = 0
 serial.redirectToUSB()
 serial.setBaudRate(BaudRate.BaudRate9600)
 serial.writeLine("Starting CO2-Ampel")
-basic.showString("CO2-AMPEL")
+basic.showString("CO2-AMPEL V1.0")
+serial.writeLine("SCD30 Version: "+SCD30.getVersion())
+serial.writeLine("calibration: "+SCD30.getCalibration())
+serial.writeLine("press A+B together to set calibration to 400ppm")
+serial.writeLine("ready...")
 // Protokollbeschreibung des Sensors
 // https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.5_CO2/Sensirion_CO2_Sensors_SCD30_Interface_Description.pdf
 // CO2 Bewertung
 // https://www.umweltbundesamt.de/sites/default/files/medien/pdfs/kohlendioxid_2008.pdf
 basic.forever(function () {
-    // warte eine Sekunde
-    control.waitMicros(1000000)
+    // warte zwei Sekunden
+    basic.pause(2000)
     co2wert = SCD30.readCO2()
     // co2wert = scd30.lese_CO2_Wert()()
     serial.writeLine("")
