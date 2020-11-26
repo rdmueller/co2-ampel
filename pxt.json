@@ -3,7 +3,7 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "SCD30": "github:rdmueller/pxt-scd30#3d7cf07874a24a06286b2e52952c02a031f0228f"
+        "SCD30": "github:rdmueller/pxt-scd30#f85af23d723d560850e8a6a1e74f5b2adcd2f54b"
     },
     "files": [
         "main.blocks",

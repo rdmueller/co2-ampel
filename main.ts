@@ -20,10 +20,12 @@ let co2wert = 0
 let wert = 0
 serial.redirectToUSB()
 serial.setBaudRate(BaudRate.BaudRate9600)
-serial.writeLine("Starting CO2-Ampel")
-basic.showString("CO2-AMPEL V1.0")
-serial.writeLine("SCD30 Version: "+SCD30.getVersion())
-serial.writeLine("calibration: "+SCD30.getCalibration())
+basic.showString("CO2-AMPEL 1.1")
+serial.writeLine("")
+serial.writeLine("")
+serial.writeLine("Starting CO2-Ampel V1.1")
+serial.writeLine("SCD30 Version: " + SCD30.getVersion())
+serial.writeLine("calibration: " + SCD30.getCalibration())
 serial.writeLine("press A+B together to set calibration to 400ppm")
 serial.writeLine("ready...")
 // Protokollbeschreibung des Sensors
@@ -45,7 +47,7 @@ basic.forever(function () {
     if (co2wert <= 800) {
         basic.setLedColor(0x008000)
     } else if (co2wert <= 1000) {
-        basic.setLedColor(0xffff00)
+        basic.setLedColor(0x0000ff)
     } else if (co2wert <= 1400) {
         basic.setLedColor(0xff8000)
     } else {
