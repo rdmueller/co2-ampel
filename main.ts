@@ -1,3 +1,8 @@
+input.onButtonPressed(Button.AB, function () {
+    SCD30.setCalibration400ppm()
+    basic.showIcon(IconNames.Heart)
+    music.playTone(262, music.beat(BeatFraction.Whole))
+})
 function displayCO2 () {
     wert = 50
     for (let x = 0; x <= 4; x++) {
@@ -13,25 +18,19 @@ function displayCO2 () {
 }
 let co2wert = 0
 let wert = 0
-let version = 0
-let RecalibrationValueCMD = 0
-let GetVersionCMD = 0
-bluetooth.startUartService()
-bluetooth.uartWriteLine("booting...")
-let temperatur = 0
 let istBereit = 0
-let SCD30ADR = 0
+let temperatur = 0
+let version = 0
 serial.redirectToUSB()
 serial.setBaudRate(BaudRate.BaudRate9600)
 serial.writeLine("Starting CO2-Ampel")
-SCD30ADR = 97
+let SCD30ADR = 97
 let GetDataReadyStatusCMD = 514
 let ReadMeasurementCMD = 768
-GetVersionCMD = 53504
+let GetVersionCMD = 53504
 let StartPeriodicMeasurementCMD = 16
-RecalibrationValueCMD = 20996
+let RecalibrationValueCMD = 20996
 basic.showString("CO2-AMPEL")
-bluetooth.uartWriteLine("CO2-Ampel aktiv")
 serial.redirectToUSB()
 serial.setBaudRate(BaudRate.BaudRate9600)
 // Protokollbeschreibung des Sensors
@@ -41,7 +40,7 @@ serial.setBaudRate(BaudRate.BaudRate9600)
 basic.forever(function () {
     // warte eine Sekunde
     control.waitMicros(1000000)
-    co2wert = SCD30.readCO2() - 192
+    co2wert = SCD30.readCO2()
     // co2wert = scd30.lese_CO2_Wert()()
     serial.writeLine("")
     serial.writeString("")
@@ -50,7 +49,6 @@ basic.forever(function () {
     serial.writeNumber(SCD30.readTemperature())
     serial.writeString(";")
     serial.writeNumber(SCD30.readHumidity())
-    bluetooth.uartWriteLine("CO2: " + co2wert + ", Temp: " + SCD30.readTemperature() + "Hum: " + SCD30.readHumidity())
     if (co2wert <= 800) {
         basic.setLedColor(0x008000)
     } else if (co2wert <= 1000) {
