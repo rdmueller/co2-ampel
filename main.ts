@@ -18,21 +18,10 @@ function displayCO2 () {
 }
 let co2wert = 0
 let wert = 0
-let istBereit = 0
-let temperatur = 0
-let version = 0
 serial.redirectToUSB()
 serial.setBaudRate(BaudRate.BaudRate9600)
 serial.writeLine("Starting CO2-Ampel")
-let SCD30ADR = 97
-let GetDataReadyStatusCMD = 514
-let ReadMeasurementCMD = 768
-let GetVersionCMD = 53504
-let StartPeriodicMeasurementCMD = 16
-let RecalibrationValueCMD = 20996
 basic.showString("CO2-AMPEL")
-serial.redirectToUSB()
-serial.setBaudRate(BaudRate.BaudRate9600)
 // Protokollbeschreibung des Sensors
 // https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.5_CO2/Sensirion_CO2_Sensors_SCD30_Interface_Description.pdf
 // CO2 Bewertung
