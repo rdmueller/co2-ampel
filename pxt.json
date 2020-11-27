@@ -1,14 +1,15 @@
 {
-    "name": "CO2-Ampel",
+    "name": "CO2-Ampel #2",
     "description": "",
     "dependencies": {
         "core": "*",
-        "radio": "*"
+        "SCD30": "github:rdmueller/pxt-scd30#f85af23d723d560850e8a6a1e74f5b2adcd2f54b"
     },
     "files": [
         "main.blocks",
         "main.ts",
-        "README.md"
+        "README.md",
+        "main.py"
     ],
     "testFiles": [
         "test.ts"
@@ -16,5 +17,5 @@
     "supportedTargets": [
         "calliopemini"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
