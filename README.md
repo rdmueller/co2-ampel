@@ -1,14 +1,21 @@
 
 > Diese Seite bei [https://rdmueller.github.io/co2-ampel/](https://rdmueller.github.io/co2-ampel/) öffnen
 
-## Als Erweiterung verwenden
+Dieses Projekt implementiert eine CO2-Ampel mit [Calliope mini](https://calliope.cc) und SCD30 CO2-Sensor in der Groovy version.
 
-Dieses Repository kann als **Erweiterung** in MakeCode hinzugefügt werden.
+Siehe auch https://www.umwelt-campus.de/forschung/projekte/iot-werkstatt/ideen-zur-corona-krise
 
-* öffne [https://makecode.calliope.cc/](https://makecode.calliope.cc/)
-* klicke auf **Neues Projekt**
-* klicke auf **Erweiterungen** unter dem Zahnrad-Menü
-* nach **https://github.com/rdmueller/co2-ampel** suchen und importieren
+Zum Kalibrieren des Sensors sollte er ca. 10 Minuten frische Lust sehen, so dass er einen Wert von 400ppm anzeigen müsste.
+Anschliessend wird er auf 400ppm kalibriert, indem A+B zusammen gedrück werden.
+
+Der CO2-Wert wird auf dem 5x5 Display angezeigt, wobei eine LED 100ppm entsprechen (der Wert wird kaufmännisch gerundet dargestellt).
+
+Die Temperatur wird mit Druck auf A, die Luftfeuchtigkeit mit Druck auf B angezeigt.
+Die Temperatur ist jedoch nicht kalibriert.
+
+Die Messwerte werden auch über USB als serielle Daten (9600 Baud) ausgegeben, so dass sie aufgezeichnet werden können.
+
+Ein Video steht unter https://twitter.com/RalfDMueller/status/1332226297997692928 zur Verfügung.
 
 ## Dieses Projekt bearbeiten ![Build Status Abzeichen](https://github.com/rdmueller/co2-ampel/workflows/MakeCode/badge.svg)
 
@@ -23,7 +30,7 @@ Um dieses Repository in MakeCode zu bearbeiten.
 Dieses Bild zeigt den Blockcode vom letzten Commit im Master an.
 Die Aktualisierung dieses Bildes kann einige Minuten dauern.
 
-![Eine gerenderte Ansicht der Blöcke](https://github.com/rdmueller/co2-ampel/raw/master/.github/makecode/blocks.png)
+![Eine gerenderte Ansicht der Blöcke](https://github.com/rdmueller/co2-ampel/raw/v2/.github/makecode/blocks.png)
 
 #### Metadaten (verwendet für Suche, Rendering)
 
