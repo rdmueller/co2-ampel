@@ -3,31 +3,57 @@ input.onButtonPressed(Button.AB, function () {
     basic.showIcon(IconNames.Heart)
     basic.pause(1000)
 })
-function displayCO2 () {
-    wert = 50
-    for (let x = 0; x <= 4; x++) {
-        for (let y = 0; y <= 4; y++) {
-            if (wert < co2wert) {
-                led.plot(x, y)
+function displayCO2 (myco2wert : number) {
+    let wert = 50
+    for (let y = 0; y <= 4; y++) {
+        for (let x = 0; x <= 4; x++) {
+            let bright = 0
+            if (wert <= 800) {
+                bright=0x10
+            } else if (wert <= 1000) {
+                bright=0x40
+            } else if (wert <= 1400) {
+                bright=0x80+0x40
             } else {
-                led.unplot(x, y)
+                bright=0xff
+            }
+            if (wert < myco2wert) {
+                led.plotBrightness(x, 4-y, bright)
+            } else {
+                led.plotBrightness(x, 4-y,0)
             }
             wert += 100
         }
     }
+    if (myco2wert <= 800) {
+        basic.setLedColor(0x008000)
+    } else if (myco2wert <= 1000) {
+        basic.setLedColor(0x804000)
+    } else if (myco2wert <= 1400) {
+        basic.setLedColor(0xff4000)
+    } else {
+        basic.setLedColor(0xff0000)
+    }
 }
+
 let co2wert = 0
 let wert = 0
 serial.redirectToUSB()
 serial.setBaudRate(BaudRate.BaudRate9600)
-basic.showString("CO2-AMPEL 1.1")
+led.setDisplayMode(DisplayMode.Greyscale)
+basic.showString("CO2-AMPEL 1.3")
 serial.writeLine("")
 serial.writeLine("")
-serial.writeLine("Starting CO2-Ampel V1.1")
+serial.writeLine("Starting CO2-Ampel V1.3")
 serial.writeLine("SCD30 Version: " + SCD30.getVersion())
 serial.writeLine("calibration: " + SCD30.getCalibration())
 serial.writeLine("press A+B together to set calibration to 400ppm")
 serial.writeLine("ready...")
+
+for (let demo = 0; demo <= 2500; demo++) {
+    displayCO2(demo)
+    basic.pause(2)
+}
 // Protokollbeschreibung des Sensors
 // https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.5_CO2/Sensirion_CO2_Sensors_SCD30_Interface_Description.pdf
 // CO2 Bewertung
@@ -44,14 +70,5 @@ basic.forever(function () {
     serial.writeNumber(SCD30.readTemperature())
     serial.writeString(";")
     serial.writeNumber(SCD30.readHumidity())
-    if (co2wert <= 800) {
-        basic.setLedColor(0x008000)
-    } else if (co2wert <= 1000) {
-        basic.setLedColor(0x0000ff)
-    } else if (co2wert <= 1400) {
-        basic.setLedColor(0xff8000)
-    } else {
-        basic.setLedColor(0xff0000)
-    }
-    displayCO2()
+    displayCO2(co2wert)
 })
