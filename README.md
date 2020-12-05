@@ -3,10 +3,15 @@
 
 Dieses Projekt implementiert eine CO2-Ampel mit [Calliope mini](https://calliope.cc) und SCD30 CO2-Sensor in der Groovy version.
 
-Siehe auch https://www.umwelt-campus.de/forschung/projekte/iot-werkstatt/ideen-zur-corona-krise
+* Siehe auch https://www.umwelt-campus.de/forschung/projekte/iot-werkstatt/ideen-zur-corona-krise
+* Informationen zum Sensor: https://www.sensirion.com/de/umweltsensoren/kohlendioxidsensor/kohlendioxidsensoren-co2/ 
+* Protokollbeschreibung des Sensors: https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9.5_CO2/Sensirion_CO2_Sensors_SCD30_Interface_Description.pdf
+* https://www.umweltbundesamt.de/sites/default/files/medien/pdfs/kohlendioxid_2008.pdf
 
 Zum Kalibrieren des Sensors sollte er ca. 10 Minuten frische Lust sehen, so dass er einen Wert von 400ppm anzeigen müsste.
 Anschliessend wird er auf 400ppm kalibriert, indem A+B zusammen gedrück werden.
+
+Damit die Kalibrierung nicht aus versehen kaputt gemacht wird, sollte nach erfolgreicher Kalibrierung eine Version mit deaktivierter Kalibrierungsfunktion aufgespielt werden.
 
 Der CO2-Wert wird auf dem 5x5 Display angezeigt, wobei eine LED 100ppm entsprechen (der Wert wird kaufmännisch gerundet dargestellt).
 
